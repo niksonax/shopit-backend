@@ -4,8 +4,12 @@ Server part of a simple shop application built for educational purposes using No
 
 ### Installation
 
-```npm install```
+```
+npm install
+```
 
-### Development mode
+### Start application
 
-```npm start```
+```
+npm start
+```
