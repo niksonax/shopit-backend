@@ -2,7 +2,7 @@
 
 Server part of a simple shop application built for educational purposes using NodeJS (Express).
 
-### Installation
+### Install packages
 
 ```
 npm install
@@ -12,4 +12,10 @@ npm install
 
 ```
 npm start
+```
+
+### Run application in development mode
+
+```
+npm run dev
 ```
