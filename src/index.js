@@ -1,13 +1,18 @@
-import express from 'express';
+import express, { json } from 'express';
+import cors from 'cors';
 import 'dotenv/config';
+import rootRouter from './routes.js';
 
 const app = express();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+const corsOptions = { credentials: true, origin: process.env.URL || '*' };
+
+app.use(cors(corsOptions));
+app.use(json());
+
+app.use('/api', rootRouter);
 
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
