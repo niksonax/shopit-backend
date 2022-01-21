@@ -22,8 +22,30 @@ router.post('/login', async (req, res) => {
 
     let tokens = jwtTokens(user);
 
-    res.cookie('refresh_token', tokens.refreshToken, { httpOnly: true });
+    res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true });
     res.json(tokens);
+  } catch (error) {
+    res.status(401).json({ error: error.message });
+  }
+});
+
+router.get('/refresh-token', async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) throw new Error("Refresh token wasn't provided.");
+
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      (error, decoded) => {
+        if (error) throw new Error(error.message);
+
+        const tokens = jwtTokens(decoded);
+
+        res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true });
+        res.json(tokens);
+      }
+    );
   } catch (error) {
     res.status(401).json({ error: error.message });
   }
