@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import pool from '../config/db.js';
+import pool from '../../config/db.js';
 import { jwtTokens } from '../helpers.js';
 
 class AuthController {
