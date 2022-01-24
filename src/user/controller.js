@@ -1,5 +1,7 @@
 import bcrypt from 'bcrypt';
-import pool from '../../config/db.js';
+import UserModel from './model.js';
+
+const userModel = new UserModel();
 
 class UserController {
   constructor() {
@@ -9,8 +11,7 @@ class UserController {
 
   async getAll(req, res) {
     try {
-      const data = await pool.query('SELECT * FROM users');
-      const users = { users: data.rows };
+      const users = await userModel.getAll();
 
       res.json(users);
     } catch (error) {
@@ -20,16 +21,14 @@ class UserController {
 
   async create(req, res) {
     try {
-      const saltRounds = 10;
+      const name = req.body.name.toString();
+      const email = req.body.email.toString();
       const password = req.body.password.toString();
 
+      const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-      const data = await pool.query(
-        'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
-        [req.body.name, req.body.email, hashedPassword]
-      );
-      const newUser = { users: data.rows };
+      const newUser = await userModel.create(name, email, hashedPassword);
 
       res.json(newUser);
     } catch (error) {
