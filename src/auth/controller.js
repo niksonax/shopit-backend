@@ -10,6 +10,7 @@ class AuthController {
     this.login = this.login.bind(this);
     this.getRefreshToken = this.getRefreshToken.bind(this);
     this.deleteRefreshToken = this.deleteRefreshToken.bind(this);
+    this.register = this.register.bind(this);
   }
 
   async login(req, res) {
@@ -31,6 +32,23 @@ class AuthController {
       });
     } catch (error) {
       res.status(401).json({ error: error.message });
+    }
+  }
+
+  async register(req, res) {
+    try {
+      const name = req.body.name.toString();
+      const email = req.body.email.toString();
+      const password = req.body.password.toString();
+
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+      const newUser = await userModel.create(name, email, hashedPassword);
+
+      res.json(newUser);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
   }
 

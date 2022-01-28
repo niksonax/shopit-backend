@@ -8,6 +8,4 @@ const userController = new UserController();
 
 router.get('/', authenticateToken, userController.getAll);
 
-router.post('/', userController.create);
-
 export default router;
