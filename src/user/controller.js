@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import UserModel from './model.js';
 
 const userModel = new UserModel();
