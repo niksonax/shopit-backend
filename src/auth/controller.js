@@ -25,7 +25,10 @@ class AuthController {
       let tokens = jwtTokens(user);
 
       res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true });
-      res.json(tokens);
+      res.json({
+        tokens,
+        user: { name: user.name, email: user.email },
+      });
     } catch (error) {
       res.status(401).json({ error: error.message });
     }
