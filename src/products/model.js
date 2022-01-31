@@ -7,6 +7,12 @@ class ProductModel {
     return products;
   }
 
+  async getById(id) {
+    const data = await pool.query('SELECT * FROM products WHERE id = $1', [id]);
+    const product = data.rows[0];
+    return product;
+  }
+
   async getByUser(userId) {
     const data = await pool.query('SELECT * FROM products WHERE user_id = $1', [
       userId,
