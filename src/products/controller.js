@@ -5,6 +5,7 @@ const productModel = new ProductModel();
 class ProductController {
   constructor() {
     this.getAll = this.getAll.bind(this);
+    this.getById = this.getById.bind(this);
     this.getByUser = this.getByUser.bind(this);
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
@@ -16,6 +17,18 @@ class ProductController {
       const products = await productModel.getAll();
 
       res.json(products);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  async getById(req, res) {
+    try {
+      const id = req.params.id;
+
+      const product = await productModel.getById(id);
+
+      res.json(product);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
