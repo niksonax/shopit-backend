@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import ProductController from './controller.js';
+import { authenticateToken } from '../auth/middleware.js';
 import {
   isProductExists,
   createProductValidation,
@@ -16,10 +17,16 @@ router.get('/:id', isProductExists, productController.getById);
 
 router.get('/user/:userId', productController.getByUser);
 
-router.post('/', createProductValidation, productController.create);
+router.post(
+  '/',
+  authenticateToken,
+  createProductValidation,
+  productController.create
+);
 
 router.put(
   '/:id',
+  authenticateToken,
   isProductExists,
   updateProductValidation,
   productController.update
