@@ -13,4 +13,20 @@ function jwtTokens({ id, name, email }) {
   return { accessToken, refreshToken };
 }
 
-export { jwtTokens };
+function snakeToCamelKeys(obj) {
+  const snakeToCamel = (str) =>
+    str
+      .toLowerCase()
+      .replace(/([-_][a-z])/g, (group) =>
+        group.toUpperCase().replace('-', '').replace('_', '')
+      );
+
+  const data = Object.entries(obj).reduce(
+    (x, [k, v]) => (x[snakeToCamel(k)] = v) && x,
+    {}
+  );
+
+  return data;
+}
+
+export { jwtTokens, snakeToCamelKeys };
