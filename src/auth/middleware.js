@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
+import Joi from 'joi';
 import UserModel from '../user/model.js';
+import { validateRequest } from '../middleware.js';
 
 const userModel = new UserModel();
 
@@ -42,4 +44,28 @@ async function isEmailUnique(req, res, next) {
   next();
 }
 
-export { authenticateToken, isEmailUnique };
+function loginValidation(req, res, next) {
+  const schema = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  });
+
+  validateRequest(req, res, next, schema);
+}
+
+function registrationValidation(req, res, next) {
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().min(5).required(),
+  });
+
+  validateRequest(req, res, next, schema);
+}
+
+export {
+  authenticateToken,
+  isEmailUnique,
+  loginValidation,
+  registrationValidation,
+};
