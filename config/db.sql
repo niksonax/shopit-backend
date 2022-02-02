@@ -42,6 +42,7 @@ INSERT INTO products (name, description, price, user_id) VALUES ('Cherry Bomb', 
 CREATE TABLE purchases(
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   product_id uuid,
+  user_id uuid,
   price NUMERIC(10, 2) NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -52,4 +53,4 @@ BEFORE UPDATE ON purchases
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
-INSERT INTO purchases (product_id, price) VALUES ('69ca37ce-bf66-4514-a696-14918521a223','50');
+INSERT INTO purchases (product_id, user_id, price) VALUES ('69ca37ce-bf66-4514-a696-14918521a223', 'ac1e0283-0ba5-4fca-9964-24eb3cf80450', '50');
