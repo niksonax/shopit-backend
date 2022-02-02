@@ -86,7 +86,8 @@ class ProductController {
       const id = req.params.id;
 
       const deletedProduct = await productModel.delete(id);
-      if (!deletedProduct) res.status(204).json({});
+      if (!deletedProduct)
+        res.status(204).json({ message: "Product with this id didn't exist" });
 
       res.json(deletedProduct);
     } catch (error) {
