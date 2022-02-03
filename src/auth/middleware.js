@@ -27,7 +27,7 @@ function authenticateToken(req, res, next) {
 
     next();
   } catch (error) {
-    return res.status(403).json({ error: error.message });
+    return res.status(401).json({ error: error.message });
   }
 }
 
