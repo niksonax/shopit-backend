@@ -8,7 +8,10 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-const corsOptions = { credentials: true, origin: process.env.URL || '*' };
+const corsOptions = {
+  credentials: true,
+  origin: process.env.URL || '*',
+};
 
 app.use(json());
 app.use(cookieParser());
