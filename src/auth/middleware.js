@@ -22,7 +22,7 @@ function authenticateToken(req, res, next) {
     jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET, (error, decoded) => {
       if (error) throw new Error(error.message);
 
-      req.user = decoded;
+      res.locals.user = decoded;
     });
 
     next();

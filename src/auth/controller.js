@@ -8,6 +8,7 @@ const userModel = new UserModel();
 class AuthController {
   constructor() {
     this.login = this.login.bind(this);
+    this.loginByToken = this.loginByToken.bind(this);
     this.getRefreshToken = this.getRefreshToken.bind(this);
     this.deleteRefreshToken = this.deleteRefreshToken.bind(this);
     this.register = this.register.bind(this);
@@ -32,6 +33,17 @@ class AuthController {
       });
     } catch (error) {
       res.status(401).json({ error: error.message });
+    }
+  }
+
+  async loginByToken(req, res) {
+    try {
+      const user = res.locals.user;
+      const { name, email } = user;
+
+      res.json({ name, email });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
   }
 
