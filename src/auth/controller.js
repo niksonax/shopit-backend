@@ -29,7 +29,7 @@ class AuthController {
       res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true });
       res.json({
         tokens,
-        user: { name: user.name, email: user.email },
+        user: { id: user.id, name: user.name, email: user.email },
       });
     } catch (error) {
       res.status(401).json({ error: error.message });
@@ -39,9 +39,9 @@ class AuthController {
   async loginByToken(req, res) {
     try {
       const user = res.locals.user;
-      const { name, email } = user;
+      const { id, name, email } = user;
 
-      res.json({ name, email });
+      res.json({ id, name, email });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
