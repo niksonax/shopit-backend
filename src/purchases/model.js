@@ -29,6 +29,17 @@ class PurchaseModel {
     return purchases;
   }
 
+  async getByProduct(productId) {
+    const data = await pool.query(
+      'SELECT * FROM purchases WHERE product_id = $1',
+      [productId]
+    );
+    const purchases = {
+      purchases: data.rows.map((row) => snakeToCamelKeys(row)),
+    };
+    return purchases;
+  }
+
   async create(productId, userId, price) {
     const data = await pool.query(
       'INSERT INTO purchases (product_id, user_id, price) VALUES ($1, $2, $3) RETURNING *',
