@@ -1,6 +1,8 @@
 import ProductModel from './model.js';
+import PurchaseModel from '../purchases/model.js';
 
 const productModel = new ProductModel();
+const purchaseModel = new PurchaseModel();
 
 class ProductController {
   constructor() {
@@ -88,6 +90,12 @@ class ProductController {
       const deletedProduct = await productModel.delete(id);
       if (!deletedProduct)
         res.status(204).json({ message: "Product with this id didn't exist" });
+
+      // Deleting all purchases that contain this product
+      const purchases = await purchaseModel.getByProduct(id);
+      for (let purchase of purchases.purchases) {
+        await purchaseModel.delete(purchase.id);
+      }
 
       res.json(deletedProduct);
     } catch (error) {
