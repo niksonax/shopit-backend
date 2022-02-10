@@ -7,7 +7,7 @@ let localPoolConfig = {
   password: process.env.DATABASE_PASSWORD || 'postgres',
   host: 'localhost',
   port: '5432',
-  database: process.env.DATABASE_NAME || 'shopit',
+  database: process.env.DATABASE_NAME || 'shopit-with-roles',
 };
 
 const poolConfig = process.env.DATABASE_URL
