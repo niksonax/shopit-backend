@@ -17,7 +17,8 @@ CREATE TABLE users(
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   name TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE,
-  password TEXT NOT NULL
+  password TEXT NOT NULL,
+  role_id INTEGER NOT NULL DEFAULT '1'
 );
 
 INSERT INTO users (name, email, password) VALUES ('John','john@mail.com','12345');
@@ -58,3 +59,16 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
 INSERT INTO purchases (product_id, user_id, price) VALUES ('69ca37ce-bf66-4514-a696-14918521a223', 'ac1e0283-0ba5-4fca-9964-24eb3cf80450', '50');
+
+
+-- SHOPIT WITH ROLES
+CREATE TABLE roles(
+  id SERIAL PRIMARY KEY NOT NULL,
+  title TEXT NOT NULL UNIQUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO roles (title) VALUES ('user');
+INSERT INTO roles (title) VALUES ('manager');
+INSERT INTO roles (title) VALUES ('admin');
